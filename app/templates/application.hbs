@@ -1,7 +1,57 @@
-{{page-title "CodeSplitRouteinfo"}}
+{{page-title 'CodeSplitRouteinfo'}}
+<main class='p-10'>
+  <h2 class='text-xl font-bold'>Reproduction Steps</h2>
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
+  <ul class='list-disc list-inside mb-10'>
+    <li>
+      Start at
+      <LinkTo @route='application' class='text-blue-500'>"Application"</LinkTo>
+      Route
+    </li>
+    <li>
+      Click to code-split
+      <LinkTo
+        @route='some-other-route'
+        class='text-blue-500'
+        @query={{hash arrayParam=this.paramsToPass}}
+      >
+        "Some Other Route"
+      </LinkTo>
+      with array query parameters
+    </li>
+    <li>
+      Observe "type" below ("string"), and query parameter URI structure
+      <span class='font-mono'>(?arrayParam=%5B1%2C2%5D)</span>. The controller
+      get a string value, which user is responsible for parsing.
+    </li>
+    <li>
+      Navigate to code-split
+      <LinkTo
+        @route='some-other-route'
+        @query={{hash arrayParam=(array)}}
+        class='text-blue-500'
+      >
+        "Some Other Route"
+      </LinkTo>
+      without query parameters
+    </li>
+    <li>Reload page, starting your session on the Code Split route</li>
+    <li>
+      Again click to code-split
+      <LinkTo
+        @route='some-other-route'
+        class='text-blue-500'
+        @query={{hash arrayParam=this.paramsToPass}}
+      >
+        "Some Other Route"
+      </LinkTo>
+      with array query parameters
+    </li>
+    <li>Observe "type" below ("object"), and query parameter URI structure
+      <span class='font-mono'>(?arrayParam[]=1&arrayParam[]=2)</span>. The
+      controller gets an Array value.
+    </li>
+  </ul>
 
-{{outlet}}
+  {{outlet}}
+</main>
